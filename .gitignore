@@ -1,0 +1,9 @@
+# Python
+*.pyc
+__pycache__
+
+# setup.py
+build
+dist
+MANIFEST
+
