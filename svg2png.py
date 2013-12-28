@@ -63,5 +63,5 @@ def main () :
 	write_png()
 
 
-if __name__ == '__main__' :
-	main()
+if __name__ == '__main__' : main()
+

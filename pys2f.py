@@ -31,7 +31,7 @@ def load_svg_document (uri, handle_error = False, **kwargs) :
 			if hasattr(handle_error, '__call__') :
 				handle_error(error)
 			else :
-				raise error
+				raise
 
 
 class _RGBA (ctypes.Structure) :

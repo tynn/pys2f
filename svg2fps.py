@@ -23,7 +23,7 @@ from sys import argv, exit, stderr, stdout
 try :
 	from PIL import Image
 	from io import BytesIO
-except ImportError as error:
+except ImportError :
 	BytesIO = None
 from pys2f import SvgFramesRenderer as SFR
 
@@ -66,7 +66,7 @@ class PngOutput (Output) :
 	def __init__ (self, input_file, output_file) :
 		try :
 			output_file % 42
-		except TypeError as error :
+		except TypeError :
 			basename, ext = splitext(output_file)
 			output_file = basename + ".%d" + ext
 			output_file % 23
@@ -133,7 +133,7 @@ def get_color (string) :
 			color = [int(color[0:2], 16) / 255.0, int(color[2:4], 16) / 255.0, int(color[4:6], 16) / 255.0]
 		color.append(float(opacity))
 		return color
-	except Exception as er:
+	except :
 		raise ValueError("invalid color format '%s'" % string)
 
 
