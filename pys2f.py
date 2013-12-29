@@ -16,7 +16,7 @@
 #	along with pys2f. If not, see <http://www.gnu.org/licenses/>.
 
 
-import ctypes
+import ctypes, ctypes.util
 
 
 def _ensure_bytes (string) :
@@ -93,4 +93,5 @@ class SvgLoadError (Exception) :
 	pass
 
 
-_lib = ctypes.cdll.LoadLibrary("libsvg2fps.so")
+_lib = ctypes.cdll.LoadLibrary(ctypes.util.find_library('svg2fps') or "libsvg2fps.so")
+
