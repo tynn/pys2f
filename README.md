@@ -21,3 +21,10 @@ Install with
 
 	 python setup.py install
 
+The .py extension of the script files will be removed by default.  
+To retain them comment out the line
+
+		cmdclass = {'build_scripts': build_scripts}, # remove .py extensions
+
+in [setup.py](setup.py)
+
