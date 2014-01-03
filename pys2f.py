@@ -65,7 +65,7 @@ class SvgFramesRenderer (object) :
 			self.config = None
 		self.data = _lib.svg2fps_load_document(_ensure_bytes(uri), fps if fps > 0 else 1, self.config)
 		if not self.data :
-			raise SvgLoadError("Failed to load document '{:s}' ({:s}x{:s}@{:d}fps)".format(uri, width or '', height or '', fps))
+			raise SvgLoadError("Failed to load document '{!s}' with ({!s}x{!s}@{:d}fps)".format(uri, width or '', height or '', fps))
 
 	def __del__ (self) :
 		try :
