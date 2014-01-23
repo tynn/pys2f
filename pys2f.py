@@ -1,5 +1,5 @@
 #	This file is part of pys2f.
-#	
+#
 #	Copyright (c) 2013 Christian Schmitz <tynn.dev@gmail.com>
 #
 #	pys2f is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@ def _ensure_bytes (string) :
 def load_svg_document (uri, handle_error = False, **kwargs) :
 	try :
 		return SvgFramesRenderer(uri, **kwargs)
-	except SvgLoadError as error:
+	except SvgLoadError as error :
 		if handle_error :
 			if hasattr(handle_error, '__call__') :
 				handle_error(error)
@@ -59,13 +59,13 @@ class SvgFramesRenderer (object) :
 	POSITION_END = 2
 
 	def __init__ (self, uri, fps = 0, width = 0, height = 0, time_offset = 0, position = 0, background = None, border = None):
-		if width or height or time_offset or position or background or border:
+		if width or height or time_offset or position or background or border :
 			self.config = ctypes.pointer(_Config(width, height, time_offset, position, _rgba(background), _rgba(border)))
 		else :
 			self.config = None
 		self.data = _lib.svg2fps_load_document(_ensure_bytes(uri), fps if fps > 0 else 1, self.config)
 		if not self.data :
-			raise SvgLoadError("Failed to load document '{!s}' with ({!s}x{!s}@{:d}fps)".format(uri, width or '', height or '', fps))
+			raise SvgLoadError
 
 	def __del__ (self) :
 		try :
@@ -90,7 +90,15 @@ class SvgFramesRenderer (object) :
 
 
 class SvgLoadError (Exception) :
-	pass
+
+	def __init__ (self) :
+		error = _lib.svg2fps_error_get_msg()
+		if error :
+			error = ctypes.string_at(error)
+			if isinstance(error, bytes) : error = error.decode()
+			Exception.__init__(self, error)
+		else :
+			Exception.__init__(self)
 
 
 _lib = ctypes.cdll.LoadLibrary(ctypes.util.find_library('svg2fps') or "libsvg2fps.so")
